@@ -25,4 +25,12 @@ listingRouter.get("/listings" , async(req,res)=>{
     res.render("listings/index.ejs" , {allListings});
 })
 
+// show route // individual listings
+listingRouter.get("/listings/:id" , async(req,res)=>{
+    let {id} = req.params;
+    const listing = await listingModel.findById(id);
+
+    res.render("listings/show.ejs" , {listing});
+})
+
 module.exports = listingRouter
