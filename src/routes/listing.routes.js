@@ -51,6 +51,30 @@ listingRouter.get("/listings/:id" , async(req,res)=>{
     res.render("listings/show.ejs" , {listing});
 })
 
+// edit route
+listingRouter.get("/listings/:id/edit" , async(req,res)=>{
+    let {id} = req.params;
+    const listing = await listingModel.findById(id);
+
+    res.render("listings/edit.ejs" , {listing})
+})
+
+// update route
+listingRouter.put("/listings/:id" , async(req,res)=>{
+    let {id} = req.params
+    await listingModel.findByIdAndUpdate(id , {...req.body.listing});
+    res.redirect(`/listings/${id}`)
+})
+
+// delete route
+listingRouter.delete("/listings/:id" ,async (req,res)=>{
+    let {id} = req.params
+    let deletedListing = await listingModel.findByIdAndDelete(id)
+
+    console.log(deletedListing)
+    res.redirect("/listings")
+})
+
 
 
 module.exports = listingRouter
